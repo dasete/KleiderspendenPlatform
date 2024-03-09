@@ -2,11 +2,11 @@
     import { goto } from "$app/navigation";
 
     let formData = JSON.parse(localStorage.getItem("formData"));
-    let isconfirmed;
+    let isConfirmed;
 
     function handleConfirm() {
         // Hier könnten dann die Daten an das Backend gesendet werden
-        isconfirmed = true;
+        isConfirmed = true;
     }
 
     function handleCancle() {
@@ -14,7 +14,6 @@
         goto("/register");
     }
 </script>
-  
 
 
 <h1>Bestätigen Sie bitte Ihre Spende:</h1>
@@ -29,7 +28,6 @@
         {/each}
     </ul>
 </div>
-
 
 <!-- Weitere Informationen -->
 <div class="mt-6">
@@ -55,21 +53,21 @@
 </div>
 
 <!-- Bestätigungs oder Cancle Buttons -->
-{#if !isconfirmed}
-<div class="mt-6">
-    <button on:click={handleConfirm} class="btn mr-2">
-    Eingaben Bestätigen
-    </button>
+{#if !isConfirmed}
+    <div class="mt-6">
+        <button on:click={handleConfirm} class="btn mr-2">
+            Eingaben Bestätigen
+        </button>
 
-    <button on:click={handleCancle} class="btn">
-    Eingabe ändern
-    </button>
-</div>
+        <button on:click={handleCancle} class="btn">
+            Eingabe ändern
+        </button>
+    </div>
 {/if}
 
 <!-- Bestätitgungstext -->
-{#if isconfirmed}
-<div mt-10>
-    <p1 class="text-lg font-bold text-emerald-300">Die Eingaben sind bestätigt, danke für Ihre Spende!</p1>
-</div>
+{#if isConfirmed}
+    <div mt-10>
+        <p1 class="text-lg font-bold text-emerald-300">Die Eingaben sind bestätigt, danke für Ihre Spende!</p1>
+    </div>
 {/if}

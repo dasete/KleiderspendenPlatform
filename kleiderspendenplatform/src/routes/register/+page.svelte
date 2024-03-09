@@ -18,6 +18,7 @@
         { name: "Hose", quantity: 0 },
         { name: "Schuhe", quantity: 0 },
         ];
+
     let newClothingTypes = [{ name: "", quantity: 0 }];
 
     let pickupZipAlert;
@@ -27,7 +28,6 @@
     let pickupStreetAlert;
     let dateAlert;
     let timeAlert;
-
     
     function checkLastInput() {
       const lastItem = newClothingTypes[newClothingTypes.length - 1];
@@ -42,7 +42,7 @@
                 formData.clothingList = [...formData.clothingList, item];
             }
         }
-        
+
         for (let item of newClothingTypes) {
             if (item.name.trim() !== "" && item.quantity > 0) {
                 formData.clothingList = [...formData.clothingList, item];
@@ -50,7 +50,7 @@
         }
     }
 
-    const resetAlerts  = () => {
+    function resetAlerts() {
         pickupZipAlert = false;
         clothingListAlert = false;
         pickupTypeAlert = false;
@@ -60,32 +60,27 @@
         timeAlert = false;
     }
     
-    const isZipValid = () => {
-
+    function isZipValid() {
         if ((formData.pickupZip.startsWith("10") && formData.pickupZip.length === 5 && formData.pickupZip.match(/\d/g).length === 5)) {
             return true; // es handelt sich um eine gültige PLZ
         }
-
         return false; // es handelt sich um keine gültige PLZ
-    };
+    }
 
-    const areInputsValid = () => {
+    function areInputsValid() {
         if (formData.clothingList.length === 0) {
             clothingListAlert = true;
         }
-
         if (formData.crisisArea.length === 0) {
             crisisAreaAlert = true;
         }
-
         if (formData.pickupType.length === 0) {
             pickupTypeAlert = true;
         }
-
         if (formData.pickupType === "adress") {
 
             if (formData.pickupStreet.length === 0) {
-            pickupStreetAlert = true;
+                pickupStreetAlert = true;
             }
 
             if (!isZipValid()) {
@@ -100,29 +95,26 @@
                 timeAlert = true;
             }
         }
-        
         if (clothingListAlert || pickupTypeAlert || crisisAreaAlert || pickupStreetAlert || dateAlert || timeAlert || pickupZipAlert ) {
             return false;
         }
-
         return true;
     }
 
-    const handleSubmit = () => {
+    function handleSubmit() {
         resetAlerts();
         generateClothingList();
-        // Validiere, ob in allen Inputfield etwas eingetragen wurde und Zip korrekt ist
+        // Validiere, ob in allen Inputfield etwas eingetragen wurde und PLZ korrekt ist
         if (!areInputsValid()) {
-            // es fehlen Inputs oder Zip ist falsch, daher return
+            // Es fehlen Inputs oder PLZ ist falsch, daher return
             formData.clothingList = [];
             return;
         }
 
-        // gehe zu Zusammenfassung
+        // Daten lokal in Browser speichern und zu Zusammenfassung navigieren
         localStorage.setItem("formData", JSON.stringify(formData));
         goto("/summary");
     };
-
 </script>
 
 
@@ -170,7 +162,7 @@
                     <span class="block text-sm font-semibold mb-1">An welches Kriesengebiet möchten Sie die Spende schicken?</span>
                 {:else}
                     <span class="block text-sm font-semibold mb-1 text-red-500">An welches Kriesengebiet möchten Sie die Spende schicken? | Bitte treffen Sie eine Auswahl.</span>
-                {/if}
+                {/if} 
             </label>
             <select bind:value={formData.crisisArea} class="input" id="crisisArea">
                 <option value="Krisengebiet A">Krisengebiet A</option>
@@ -181,7 +173,7 @@
             </select>
         </div>
 
-        <!-- Abholen lassen oder Abgeben -->
+        <!-- Abholen lassen oder Abgeben an Geschäftsstelle -->
         <div class="mb-4">
             <label for="pickupType">
                 {#if !pickupTypeAlert}
